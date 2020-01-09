@@ -20,6 +20,7 @@ public class CarSearchDAOimpl implements CarSearchDAOCustom {
 
         String sql ="SELECT * FROM car "+
                 "INNER JOIN location ON car.locationid = location.id "+
+                "WHERE car.possible = 1 "+
                 " AND car.locationid = ? "+
                 " AND car.price BETWEEN ? AND ? "+
                 "AND car.end_date <= ? ";

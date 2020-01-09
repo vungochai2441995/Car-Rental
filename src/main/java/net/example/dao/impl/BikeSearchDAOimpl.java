@@ -21,6 +21,7 @@ public class BikeSearchDAOimpl implements BikeSearchDAOCustom {
 
         String sql ="SELECT * FROM bike "+
                 "INNER JOIN location ON bike.locationid = location.id "+
+                "WHERE bike.possible = 1 "+
                 " AND bike.locationid = ? "+
                 " AND bike.price BETWEEN ? AND ? "+
                 "AND bike.end_date <= ? ";

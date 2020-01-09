@@ -11,7 +11,14 @@ import java.util.Date;
 @Table(name = "bike")
 public class Bike {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "license",nullable = false,unique = true)
+    private String license;
+
+    @Column(name = "deposit",nullable = false)
+    private int deposit;
 
     @Column(name = "name",nullable = false)
     private String name;

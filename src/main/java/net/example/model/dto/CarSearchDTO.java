@@ -7,7 +7,8 @@ public class CarSearchDTO {
     private String name;
     private int gear;
     private int price;
-    private long vehicleId;
+    private long location;
+    private Long id;
     private String image;
     private String showroomName;
 }

@@ -1,20 +1,17 @@
 package net.example.service;
 
-import net.example.dao.BikeSearchDAOCustom;
-import net.example.dao.CarSearchDAOCustom;
-import net.example.dao.LocationDAO;
+import net.example.dao.*;
 import net.example.entity.Bike;
 import net.example.entity.Car;
 import net.example.entity.Location;
-import net.example.model.dto.BikeSearchDTO;
-import net.example.model.dto.CarSearchDTO;
-import net.example.model.dto.LocationDTO;
+import net.example.model.dto.*;
 import net.example.model.request.SearchInfRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 @Component
@@ -28,7 +25,11 @@ public class CarProductService implements ICarProductService {
     @Autowired
     BikeSearchDAOCustom bikeSearchDAOCustom;
 
+    @Autowired
+    BikeDetailDAO bikeDetailDAO;
 
+    @Autowired
+    CarDetailDAO carDetailDAO;
 
     @Override
     public List<LocationDTO> searchLocation() {
@@ -68,13 +69,30 @@ public class CarProductService implements ICarProductService {
         return bikeSearchDTOS;
     }
 
+    @Override
+    public CarDetailDTO searchCarDetail(Long id) {
+        Car car = carDetailDAO.findOneById(id);
+        CarDetailDTO carDetailDTO = new CarDetailDTO();
+        BeanUtils.copyProperties(car,carDetailDTO);
+        return carDetailDTO;
+    }
+
+    @Override
+    public BikeDetailDTO searchBikeDetail(Long id) {
+        Bike bike = bikeDetailDAO.findOneById(id);
+        BikeDetailDTO bikeDetailDTO = new BikeDetailDTO();
+        BeanUtils.copyProperties(bike,bikeDetailDTO);
+        return bikeDetailDTO;
+    }
+
     private  CarSearchDTO mapCarEntitiToModel(Car car){
         CarSearchDTO carSearchDTO = new CarSearchDTO();
         carSearchDTO.setGear(car.getGear());
         carSearchDTO.setImage(car.getUrl());
         carSearchDTO.setName(car.getName());
         carSearchDTO.setPrice(car.getPrice());
-        carSearchDTO.setVehicleId(car.getLocation().getId());
+        carSearchDTO.setLocation(car.getLocation().getId());
+        carSearchDTO.setId(car.getId());
         carSearchDTO.setShowroomName(car.getShowroomName());
         return carSearchDTO;
     }
@@ -85,7 +103,8 @@ public class CarProductService implements ICarProductService {
         bikeSearchDTO.setImage(bike.getUrl());
         bikeSearchDTO.setName(bike.getName());
         bikeSearchDTO.setPrice(bike.getPrice());
-        bikeSearchDTO.setVehicleId(bike.getLocation().getId());
+        bikeSearchDTO.setLocation(bike.getLocation().getId());
+        bikeSearchDTO.setId(bike.getId());
         bikeSearchDTO.setShowroomName(bike.getShowroom());
         return bikeSearchDTO;
     }
