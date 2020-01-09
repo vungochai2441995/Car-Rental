@@ -4,7 +4,9 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.example.entity.Ticket;
 import net.example.model.dto.*;
+import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
 import net.example.service.ICarProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,4 +80,15 @@ public class ProductCarController {
         return ResponseEntity.ok(bikeDetailDTO);
     }
 
+
+    @ApiOperation(value="book vehicle via usersID and vehicleID", response = Long.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/book")
+    public ResponseEntity<?> bookTicket(@RequestBody InsertBookingRequest insertBookingRequest){
+        Long result = carProductService.insertTicket(insertBookingRequest);
+        return ResponseEntity.ok(result);
+    }
 }

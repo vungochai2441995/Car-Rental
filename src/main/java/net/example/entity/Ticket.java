@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,9 +16,31 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userID")
-    private User users;
+    @Column(name = "createdDate",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Column(name = "endDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date endDate;
+
+    @Column(name = "startDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date startDate;
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    private Car car;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "bike_id", referencedColumnName = "id")
+    private Bike bike;
+
 
 //    @OneToMany(mappedBy = "tickets")
 //    private List<Car> cars = new ArrayList<>();

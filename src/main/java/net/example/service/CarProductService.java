@@ -4,12 +4,16 @@ import net.example.dao.*;
 import net.example.entity.Bike;
 import net.example.entity.Car;
 import net.example.entity.Location;
+import net.example.entity.Ticket;
 import net.example.model.dto.*;
+import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -31,8 +35,12 @@ public class CarProductService implements ICarProductService {
     @Autowired
     CarDetailDAO carDetailDAO;
 
+    @Autowired
+    TicketDAO ticketDAO;
+
     @Override
     public List<LocationDTO> searchLocation() {
+
         List<Location> locations = locationDAO.findAll();
         System.out.println(locations);
         List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
@@ -83,6 +91,31 @@ public class CarProductService implements ICarProductService {
         BikeDetailDTO bikeDetailDTO = new BikeDetailDTO();
         BeanUtils.copyProperties(bike,bikeDetailDTO);
         return bikeDetailDTO;
+    }
+
+    @Override
+    public Long insertTicket(InsertBookingRequest insertBookingRequest) {
+        Date start_date = insertBookingRequest.getStartDate();
+        Date end_date = insertBookingRequest.getEndDate();
+        Long vehicle_id = insertBookingRequest.getVehicle_id();
+        Long user_id = insertBookingRequest.getUser_id();
+        if (insertBookingRequest.getType() == 1) {
+            try {
+                ticketDAO.bookCar(start_date, end_date, vehicle_id, user_id);
+            } catch (DataAccessException e) {
+                return null;
+            }
+            if (ticketDAO.findByUseId(user_id) == user_id){
+                return user_id;
+            } else return null;
+        } else if (insertBookingRequest.getType() == 2) {
+
+            ticketDAO.bookBike(start_date, end_date, vehicle_id, user_id);
+            if (ticketDAO.findByUseId(user_id) == user_id) {
+                return user_id;
+            }
+        }
+        return null;
     }
 
     private  CarSearchDTO mapCarEntitiToModel(Car car){

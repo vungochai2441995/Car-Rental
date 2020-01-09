@@ -61,10 +61,6 @@ public class Car implements Serializable {
     private Date startDate  ;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ticketID")
-    private Ticket tickets;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "locationID")
     private Location location;
 }
