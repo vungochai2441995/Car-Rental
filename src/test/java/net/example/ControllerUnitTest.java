@@ -1,7 +1,7 @@
 package net.example;
 
 
-import net.example.entity.Users;
+import net.example.entity.User;
 import net.example.service.UsersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ControllerUnitTest {
 
     @Test
     public void getUserByEmail() throws Exception {
-        Users user = new Users();
+        User user = new User();
         user.setEmail("hai@gmail.com");
         user.setUsername("hai");
         user.setAddress("ha noi");

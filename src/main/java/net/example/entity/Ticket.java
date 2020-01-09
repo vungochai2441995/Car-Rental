@@ -17,8 +17,11 @@ public class Ticket {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID")
-    private Users users;
+    private User users;
 
-    @OneToMany(mappedBy = "tickets")
-    private List<Vehicle> vehicles = new ArrayList<>();
+//    @OneToMany(mappedBy = "tickets")
+//    private List<Car> cars = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "tickets")
+//    private List<Bike> bikes = new ArrayList<>();
 }

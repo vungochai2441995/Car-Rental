@@ -1,12 +1,10 @@
 package net.example.service;
 
-import io.swagger.models.auth.In;
 import net.example.dao.UsersDAO;
-import net.example.entity.Users;
+import net.example.entity.User;
 import net.example.model.request.CreateUsersRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -15,22 +13,18 @@ public class UsersService implements IUsersService {
     @Autowired
     private UsersDAO usersDAO;
 
-    public List<Users> getAllUsers() {
-        List<Users> users = usersDAO.findAll();
-        return null;
-    }
-
-    public Users test(){
-        Users users = usersDAO.test();
+    public List<User> getAllUsers() {
+        List<User> users = usersDAO.findAll();
         return users;
     }
 
+
     public Integer createUser(CreateUsersRequest createUsersRequest){
-        Users users = usersDAO.findByUsername(createUsersRequest.getUsername());
+        User users = usersDAO.findByUsername(createUsersRequest.getUsername());
         if (users != null){
             return 0;
         }else {
-            users = new Users();
+            users = new User();
             users.setUsername(createUsersRequest.getUsername());
             users.setAddress(createUsersRequest.getAddress());
             users.setEmail(createUsersRequest.getEmail());
@@ -39,15 +33,15 @@ public class UsersService implements IUsersService {
         }
     }
 
-    public Users findUserByUsername(String u){
+    public User findUserByUsername(String u){
         return usersDAO.findByUsername(u);
     }
-    public Users findUserByEmail(String e){
+    public User findUserByEmail(String e){
         return usersDAO.findByEmail(e);
     }
 
     public Integer deleteUserByUsername(String u){
-        Users users = usersDAO.findByUsername(u);
+        User users = usersDAO.findByUsername(u);
         System.out.println(users);
         if(users != null){
             usersDAO.deleteById(users.getId());
@@ -58,7 +52,7 @@ public class UsersService implements IUsersService {
     }
 
     public Integer updateUser(CreateUsersRequest createUsersRequest){
-        Users users = usersDAO.findByUsername(createUsersRequest.getUsername());
+        User users = usersDAO.findByUsername(createUsersRequest.getUsername());
         if (users == null){
             return 0;
         }else {

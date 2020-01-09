@@ -13,18 +13,15 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchCarRequest {
-    private int type;
-    private String location;
-
-    @JsonFormat(pattern="yyyy-MM-dd")
-    private Date startDate;
-
-    @JsonFormat(pattern="yyyy-MM-dd")
+public class SearchInfRequest {
+    private int location;
+    private int moneyLow;
+    private int moneyHigh;
+    @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH-mm-ss" )
     private Date endDate;
 
     private int seat;
     private int gear;
     private String cata;
-    private int money;
+
 }
