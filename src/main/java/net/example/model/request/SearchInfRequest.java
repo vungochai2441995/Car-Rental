@@ -18,7 +18,7 @@ public class SearchInfRequest {
     private int moneyLow;
     private int moneyHigh;
     @JsonFormat(shape=JsonFormat.Shape.STRING,pattern="yyyy-MM-dd HH-mm-ss" )
-    private Date endDate;
+    private Date startDate;
 
     private int seat;
     private int gear;

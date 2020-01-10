@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 2592000)
 @RequestMapping("")
 @Api(value = "Car APIs")
 public class ProductCarController {

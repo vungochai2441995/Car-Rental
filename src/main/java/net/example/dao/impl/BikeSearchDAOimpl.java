@@ -37,7 +37,7 @@ public class BikeSearchDAOimpl implements BikeSearchDAOCustom {
             query.setParameter(1,searchInfRequest.getLocation());
             query.setParameter(2,searchInfRequest.getMoneyLow());
             query.setParameter(3,searchInfRequest.getMoneyHigh());
-            query.setParameter(4,searchInfRequest.getEndDate());
+            query.setParameter(4,searchInfRequest.getStartDate());
             int i = 5;
             if (searchInfRequest.getGear()!=0){
                 query.setParameter(i++, searchInfRequest.getGear() );
