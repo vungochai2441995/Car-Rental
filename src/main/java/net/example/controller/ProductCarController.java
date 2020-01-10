@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+@CrossOrigin(origins = "https://car-rental-202001.herokuapp.com", maxAge = 2592000)
 @RestController
 @RequestMapping("")
 @Api(value = "Car APIs")
@@ -30,7 +32,7 @@ public class ProductCarController {
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
 
-    @GetMapping(name = "")
+    @GetMapping("/locations")
     public ResponseEntity<?> findAllLocation(){
         List<LocationDTO> locationDTOS = carProductService.searchLocation();
         return ResponseEntity.ok(locationDTOS);
