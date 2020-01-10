@@ -13,13 +13,13 @@ public class BtvnApplication {
 		SpringApplication.run(BtvnApplication.class, args);
 	}
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "PUT", "POST", "DELETE");
-			}
-		};
-	}
+//	@Bean
+//	public WebMvcConfigurer corsConfigurer() {
+//		return new WebMvcConfigurerAdapter() {
+//			@Override
+//			public void addCorsMappings(CorsRegistry registry) {
+//				registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "PUT", "POST", "DELETE");
+//			}
+//		};
+//	}
 }

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-@CrossOrigin(origins = "https://car-rental-202001.herokuapp.com", maxAge = 2592000)
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("")
 @Api(value = "Car APIs")
 public class ProductCarController {
