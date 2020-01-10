@@ -26,7 +26,7 @@ public class User {
     @Column(name="pass_word",nullable = false)
     private String password;
 
-//    @OneToMany(mappedBy = "users")
-//    private List<Ticket> tickets = new ArrayList<>();
+    @Column(name = "role", nullable = false)
+    private String role;
 
 }

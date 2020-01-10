@@ -8,6 +8,7 @@ import net.example.entity.Ticket;
 import net.example.model.dto.*;
 import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
+import net.example.model.response.BookTicketResponse;
 import net.example.service.ICarProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,6 @@ public class ProductCarController {
         List<LocationDTO> locationDTOS = carProductService.searchLocation();
         return ResponseEntity.ok(locationDTOS);
     }
-
 
     @ApiOperation(value="Get list car", response = CarSearchDTO.class)
     @ApiResponses({
@@ -88,7 +88,51 @@ public class ProductCarController {
     })
     @GetMapping("/book")
     public ResponseEntity<?> bookTicket(@RequestBody InsertBookingRequest insertBookingRequest){
-        Long result = carProductService.insertTicket(insertBookingRequest);
+        BookTicketResponse result = carProductService.insertTicket(insertBookingRequest);
         return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation(value="find all information car", response = Long.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/all-car")
+    public ResponseEntity<?> findAllCar(){
+        List<CarSearchDTO> carSearchDTOS = carProductService.findAllCar();
+        return ResponseEntity.ok(carSearchDTOS);
+    }
+
+    @ApiOperation(value="find all information bike", response = Long.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/all-bike")
+    public ResponseEntity<?> findAllBike(){
+        List<BikeSearchDTO> bikeSearchDTOS = carProductService.findAllBike();
+        return ResponseEntity.ok(bikeSearchDTOS);
+    }
+
+    @ApiOperation(value="find all bike's catalog", response = Long.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/catalog-bike")
+    public ResponseEntity<?> findAllBikeCatalog(){
+        List<BikeCatalogDTO>  bikeCatalogDTO = carProductService.findAllBikeCatalog();
+        return ResponseEntity.ok(bikeCatalogDTO);
+    }
+
+    @ApiOperation(value="find all car's catalog", response = Long.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/catalog-car")
+    public ResponseEntity<?> findAllCarCatalog(){
+        List<CarCatalogDTO> carCatalogDTOS = carProductService.findAllCarCatalog();
+        return ResponseEntity.ok(carCatalogDTOS);
     }
 }
