@@ -6,10 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Getter
 @Setter
@@ -35,4 +32,12 @@ public class CreateUsersRequest {
             required=true
     )
     private String password;
+
+    @Pattern(regexp="(09|01[2|6|8|9])+([0-9]{8})\\b", message = "Please provide a valid phone number")
+    @ApiModelProperty(
+            example="0916016972",
+            notes="Phone cannot be empty",
+            required=true
+    )
+    private String phone;
 }

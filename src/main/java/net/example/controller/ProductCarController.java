@@ -27,7 +27,7 @@ public class ProductCarController {
     @Autowired
     private ICarProductService carProductService;
 
-    @ApiOperation(value="Get list locations", response = LocationDTO.class)
+    @ApiOperation(value="Tìm tất cả các tỉnh", response = LocationDTO.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -39,7 +39,7 @@ public class ProductCarController {
         return ResponseEntity.ok(locationDTOS);
     }
 
-    @ApiOperation(value="Get list car", response = CarSearchDTO.class)
+    @ApiOperation(value="Tìm nâng cao xe ô tô", response = CarSearchDTO.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -50,7 +50,7 @@ public class ProductCarController {
         return new ResponseEntity<List<CarSearchDTO>>(carSearchDTOS, HttpStatus.OK);
     }
 
-    @ApiOperation(value="Get list bike", response = BikeSearchDTO.class)
+    @ApiOperation(value="Tìm nâng cao xe máy", response = BikeSearchDTO.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -61,7 +61,7 @@ public class ProductCarController {
         return new ResponseEntity<List<BikeSearchDTO>>(bikeSearchDTOS, HttpStatus.OK);
     }
 
-    @ApiOperation(value="Get detail information car via ID", response = CarDetailDTO.class)
+    @ApiOperation(value="Lấy thông tin chi tiết của xe ô tô thông qua ID", response = CarDetailDTO.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -72,7 +72,7 @@ public class ProductCarController {
         return ResponseEntity.ok(carDetailDTO);
     }
 
-    @ApiOperation(value="Get detail information bike via ID", response = BikeDetailDTO.class)
+    @ApiOperation(value="Lấy thông tin chi tiết của xe xe máy thông qua ID", response = BikeDetailDTO.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -84,7 +84,7 @@ public class ProductCarController {
     }
 
 
-    @ApiOperation(value="book vehicle via usersID and vehicleID", response = Long.class)
+    @ApiOperation(value="Đặt xe", response = Long.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -95,7 +95,7 @@ public class ProductCarController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation(value="find all information car", response = Long.class)
+    @ApiOperation(value="Tìm tất cả các xe ô tô", response = Long.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -106,7 +106,7 @@ public class ProductCarController {
         return ResponseEntity.ok(carSearchDTOS);
     }
 
-    @ApiOperation(value="find all information bike", response = Long.class)
+    @ApiOperation(value="Tìm tất cả xe máy", response = Long.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -117,7 +117,7 @@ public class ProductCarController {
         return ResponseEntity.ok(bikeSearchDTOS);
     }
 
-    @ApiOperation(value="find all bike's catalog", response = Long.class)
+    @ApiOperation(value="Tìm tất cả hãng xe máy", response = Long.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -128,7 +128,7 @@ public class ProductCarController {
         return ResponseEntity.ok(bikeCatalogDTO);
     }
 
-    @ApiOperation(value="find all car's catalog", response = Long.class)
+    @ApiOperation(value="Tìm tất cả hãng xe ô tô", response = Long.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -139,7 +139,7 @@ public class ProductCarController {
         return ResponseEntity.ok(carCatalogDTOS);
     }
 
-    @ApiOperation(value="find all ticket", response = TicketDTO.class)
+    @ApiOperation(value="Tìm tất cả thông tin đặt xe", response = TicketDTO .class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),

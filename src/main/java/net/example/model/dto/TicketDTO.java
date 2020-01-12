@@ -14,8 +14,8 @@ public class TicketDTO {
     private Date createdDate;
     private Date endDate;
     private Date startDate;
-    private Long userID;
     private Car car;
     private Bike bike;
+    private UserDTO user;
 
 }

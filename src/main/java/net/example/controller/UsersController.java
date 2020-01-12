@@ -28,7 +28,7 @@ public class UsersController {
     @Autowired
     private IUsersService usersService;
 
-    @ApiOperation(value="Get list users", response = User.class)
+    @ApiOperation(value="Tìm tất cả thông tin người dùng", response = User.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -39,7 +39,7 @@ public class UsersController {
         return ResponseEntity.ok(usersList);
     }
 
-    @ApiOperation(value="Login", response = TokenResponse.class)
+    @ApiOperation(value="Đăng nhập", response = TokenResponse.class)
     @ApiResponses({
             @ApiResponse(code = 404, message="Email does not exist in the system"),
             @ApiResponse(code = 400, message="Password wrong"),
@@ -55,7 +55,7 @@ public class UsersController {
 
 
 
-    @ApiOperation(value="Create an user", response = RegisterResponse.class)
+    @ApiOperation(value="Đăng ký", response = RegisterResponse.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -66,7 +66,7 @@ public class UsersController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation(value="Update an user", response = User.class)
+    @ApiOperation(value="cập nhật thông tin người dùng", response = User.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
@@ -74,40 +74,6 @@ public class UsersController {
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid CreateUsersRequest createUserRequest) {
         int result = usersService.updateUser(createUserRequest);
-        return ResponseEntity.ok(result);
-    }
-
-    @ApiOperation(value="Find an user via username", response = User.class)
-    @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
-    })
-    @GetMapping("/username")
-    public ResponseEntity<?> findUsersByUsername(@RequestParam(value = "key",required = true) String key){
-        User users = usersService.findUserByUsername(key);
-        return ResponseEntity.ok(users);
-    }
-
-    @ApiOperation(value="Find an user via Email", response = User.class)
-    @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
-    })
-    @GetMapping("/email")
-    public ResponseEntity<?> findUsersEmail(@RequestParam(value = "key",required = true) String key){
-        User users = usersService.findUserByEmail(key);
-        return ResponseEntity.ok(users);
-    }
-
-
-    @ApiOperation(value="Delete an user via username", response = User.class)
-    @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
-    })
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUsername(@RequestParam(value = "key",required = true) String key){
-        Integer result = usersService.deleteUserByUsername(key);
         return ResponseEntity.ok(result);
     }
 }

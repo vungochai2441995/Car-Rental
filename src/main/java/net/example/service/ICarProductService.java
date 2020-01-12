@@ -1,6 +1,7 @@
 package net.example.service;
 
 import net.example.entity.Ticket;
+import net.example.entity.User;
 import net.example.model.dto.*;
 import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
