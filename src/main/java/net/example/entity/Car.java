@@ -49,7 +49,7 @@ public class Car implements Serializable {
     private String url;
 
     @Column(columnDefinition = "boolean", nullable = false,name = "possible")
-    private Boolean possible;
+    private Boolean possible = true;
 
 
     @Column(name = "endDate",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

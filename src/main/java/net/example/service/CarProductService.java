@@ -61,7 +61,18 @@ public class CarProductService implements ICarProductService {
     public List<LocationDTO> searchLocation() {
 
         List<Location> locations = locationDAO.findAll();
-        System.out.println(locations);
+        List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
+        for (Location location:locations) {
+            LocationDTO locationDTO = new LocationDTO();
+            BeanUtils.copyProperties(location,locationDTO);
+            locationDTOS.add(locationDTO);
+        }
+        return locationDTOS;
+    }
+
+    @Override
+    public List<LocationDTO> searchLocationProduct() {
+        List<Location> locations = locationDAO.findAllLocationInProduction();
         List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
         for (Location location:locations) {
             LocationDTO locationDTO = new LocationDTO();
@@ -78,7 +89,7 @@ public class CarProductService implements ICarProductService {
         List<Car> cars =  carSearchDAOCustom.searchInfCar(searchInfRequest);
         for (Car car: cars) {
             CarSearchDTO carSearchDTO = new CarSearchDTO();
-            carSearchDTO = mapCarEntitiToModel(car);
+            carSearchDTO = mapCarEntityToModel(car);
             carSearchDTOS.add(carSearchDTO);
         }
         return carSearchDTOS;
@@ -90,7 +101,7 @@ public class CarProductService implements ICarProductService {
         List<Bike> bikes =  bikeSearchDAOCustom.searchInfBike(searchInfRequest);
         for (Bike bike: bikes) {
             BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
-            bikeSearchDTO = mapBikeEntitiToModel(bike);
+            bikeSearchDTO = mapBikeEntityToModel(bike);
             bikeSearchDTOS.add(bikeSearchDTO);
         }
         return bikeSearchDTOS;
@@ -153,7 +164,7 @@ public class CarProductService implements ICarProductService {
         List<CarSearchDTO> carSearchDTOS = new CopyOnWriteArrayList<>();
         for (Car car: cars) {
             CarSearchDTO carSearchDTO = new CarSearchDTO();
-            carSearchDTO = mapCarEntitiToModel(car);
+            carSearchDTO = mapCarEntityToModel(car);
             carSearchDTOS.add(carSearchDTO);
         }
         return carSearchDTOS;
@@ -165,7 +176,7 @@ public class CarProductService implements ICarProductService {
         List<BikeSearchDTO> bikeSearchDTOS = new CopyOnWriteArrayList<>();
         for (Bike bike: bikes) {
             BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
-            bikeSearchDTO = mapBikeEntitiToModel(bike);
+            bikeSearchDTO = mapBikeEntityToModel(bike);
             bikeSearchDTOS.add(bikeSearchDTO);
         }
         return bikeSearchDTOS;
@@ -218,7 +229,7 @@ public class CarProductService implements ICarProductService {
         return bookTicketResponse;
     }
 
-    private  CarSearchDTO mapCarEntitiToModel(Car car){
+    private  CarSearchDTO mapCarEntityToModel(Car car){
         CarSearchDTO carSearchDTO = new CarSearchDTO();
         carSearchDTO.setGear(car.getGear());
         carSearchDTO.setImage(car.getUrl());
@@ -230,7 +241,7 @@ public class CarProductService implements ICarProductService {
         return carSearchDTO;
     }
 
-    private  BikeSearchDTO mapBikeEntitiToModel(Bike bike){
+    private  BikeSearchDTO mapBikeEntityToModel(Bike bike){
         BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
         bikeSearchDTO.setGear(bike.getGear());
         bikeSearchDTO.setImage(bike.getUrl());

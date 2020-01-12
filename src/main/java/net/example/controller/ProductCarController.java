@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,6 +38,18 @@ public class ProductCarController {
     public ResponseEntity<?> findAllLocation(){
         List<LocationDTO> locationDTOS = carProductService.searchLocation();
         return ResponseEntity.ok(locationDTOS);
+    }
+
+    @ApiOperation(value="Tìm tất cả các tỉnh có trong product", response = LocationDTO.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+
+    @GetMapping("/product-location")
+    public ResponseEntity<?> findAllLocationProduct(){
+        List<LocationDTO> locations = carProductService.searchLocationProduct();
+        return ResponseEntity.ok(locations);
     }
 
     @ApiOperation(value="Tìm nâng cao xe ô tô", response = CarSearchDTO.class)

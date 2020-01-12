@@ -40,7 +40,7 @@ public class Bike {
     private String url;
 
     @Column(columnDefinition = "boolean", nullable = false,name = "possible")
-    private Boolean possible;
+    private Boolean possible = true;
 
     @Column(name = "showroom",nullable = false)
     private String showroom;

@@ -8,6 +8,7 @@ import net.example.model.request.SearchInfRequest;
 import net.example.model.response.BookTicketResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -16,6 +17,7 @@ public interface ICarProductService {
     public List<BikeSearchDTO> findAllBike();
     public BookTicketResponse insertTicket(InsertBookingRequest insertBookingRequest);
     public List<LocationDTO> searchLocation();
+    public List<LocationDTO> searchLocationProduct();
     public List<CarSearchDTO> searchCarInf(SearchInfRequest searchInfRequest);
     public List<BikeSearchDTO> searchBikeInf(SearchInfRequest searchInfRequest);
     public CarDetailDTO searchCarDetail(Long id);

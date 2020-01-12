@@ -21,6 +21,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 2592000)
 @RequestMapping("/users")
 @Api(value = "User APIs")
 public class UsersController {
@@ -52,8 +53,6 @@ public class UsersController {
         }
         return ResponseEntity.ok(result);
     }
-
-
 
     @ApiOperation(value="Đăng ký", response = RegisterResponse.class)
     @ApiResponses({
