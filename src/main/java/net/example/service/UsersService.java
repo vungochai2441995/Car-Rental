@@ -41,6 +41,7 @@ public class UsersService implements IUsersService {
             }catch (Exception e){
                 registerResponse.setMessage("Register fail");
                 registerResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                return registerResponse;
             }
             registerResponse.setMessage("Register success");
             registerResponse.setStatus(HttpStatus.OK);

@@ -59,7 +59,7 @@ public class UsersController {
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
-    @PutMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody @Valid CreateUsersRequest createUserRequest) {
         RegisterResponse result = usersService.createUser(createUserRequest);
         return ResponseEntity.ok(result);

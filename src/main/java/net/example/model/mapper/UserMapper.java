@@ -11,6 +11,7 @@ public class UserMapper {
         user.setUsername(req.getUsername());
         user.setEmail(req.getEmail());
         String hash = BCrypt.hashpw(req.getPassword(), BCrypt.gensalt(12));
+        user.setPhone(req.getPhone());
         user.setPassword(hash);
         return user;
     }

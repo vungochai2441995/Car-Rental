@@ -29,11 +29,11 @@ public class Ticket {
     private Date startDate;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "car_id",referencedColumnName = "id")
     private Car car;
 

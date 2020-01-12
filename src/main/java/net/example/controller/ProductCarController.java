@@ -46,7 +46,7 @@ public class ProductCarController {
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
 
-        @GetMapping("/product-location")
+    @GetMapping("/product-location")
     public ResponseEntity<?> findAllLocationProduct(){
         List<LocationDTO> locations = carProductService.searchLocationProduct();
         return ResponseEntity.ok(locations);
@@ -102,7 +102,7 @@ public class ProductCarController {
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
-    @PutMapping("/book")
+    @PostMapping("/book")
     public ResponseEntity<?> bookTicket(@RequestBody @Valid InsertBookingRequest insertBookingRequest){
         BookTicketResponse result = carProductService.insertTicket(insertBookingRequest);
         return ResponseEntity.ok(result);
