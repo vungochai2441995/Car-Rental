@@ -15,20 +15,19 @@ import javax.validation.constraints.Size;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUsersRequest {
-
-    @Email(message = "Please provide a valid email")
-    private String email;
-
+public class LoginRequest {
     @NotNull(message = "Username is required")
     @NotEmpty(message = "Username is required")
-
+    @Size(min = 4, max = 20, message = "Pasword must be between 4 and 20 characters")
+    @ApiModelProperty(
+            example="sam.smith@gmail.com",
+            notes="Email cannot be empty",
+            required=true
+    )
     private String username;
-    private String address;
 
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password is required")
-    @Size(min = 4, max = 20, message = "Pasword must be between 4 and 20 characters")
     @ApiModelProperty(
             example="verysecretpassword",
             notes="Password can't be empty",

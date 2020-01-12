@@ -6,12 +6,14 @@ import net.example.entity.Car;
 import net.example.entity.Location;
 import net.example.entity.Ticket;
 import net.example.model.dto.*;
+import net.example.model.mapper.ProductMapper;
 import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
 import net.example.model.response.BookTicketResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -51,6 +53,7 @@ public class CarProductService implements ICarProductService {
 
     @Autowired
     CarCatalogDAO carCatalogDAO;
+
 
     @Override
     public List<LocationDTO> searchLocation() {
@@ -132,6 +135,17 @@ public class CarProductService implements ICarProductService {
     }
 
     @Override
+    public List<TicketDTO> findAllTicket() {
+        List<Ticket> tickets = ticketDAO.findAll();
+        List<TicketDTO> ticketDTOS = new CopyOnWriteArrayList<>();
+        for (Ticket ticket: tickets) {
+            TicketDTO ticketDTO = ProductMapper.toTicketDTO(ticket);
+            ticketDTOS.add(ticketDTO);
+        }
+        return ticketDTOS;
+    }
+
+    @Override
     public List<CarSearchDTO> findAllCar() {
         List<Car> cars = carDAO.findAll();
         List<CarSearchDTO> carSearchDTOS = new CopyOnWriteArrayList<>();
@@ -157,24 +171,33 @@ public class CarProductService implements ICarProductService {
 
     @Override
     public BookTicketResponse insertTicket(InsertBookingRequest insertBookingRequest) {
+        BookTicketResponse bookTicketResponse = new BookTicketResponse();
         Date start_date = insertBookingRequest.getStartDate();
         Date end_date = insertBookingRequest.getEndDate();
         Long vehicle_id = insertBookingRequest.getVehicle_id();
-        Long user_id = insertBookingRequest.getUser_id();
+
         if (insertBookingRequest.getType() == 1) {
-            try {
-                ticketDAO.bookCar(start_date, end_date, vehicle_id, user_id);
-            } catch (Exception e) {
-                return null;
+            Optional car = carDAO.findById(vehicle_id);
+            if(!car.isPresent()){
+                bookTicketResponse.setMessage("No Car available");
+                bookTicketResponse.setStatus(HttpStatus.NOT_FOUND);
+                return bookTicketResponse;
+            }else{
+                ticketDAO.bookCar(start_date, end_date, vehicle_id);
             }
         } else if (insertBookingRequest.getType() == 2) {
-            ticketDAO.bookBike(start_date, end_date, vehicle_id, user_id);
+            Optional bike = bikeDAO.findById(vehicle_id);
+            if(!bike.isPresent()){
+                bookTicketResponse.setMessage("No Bike available");
+                bookTicketResponse.setStatus(HttpStatus.NOT_FOUND);
+                return bookTicketResponse;
+            }
+            ticketDAO.bookBike(start_date, end_date, vehicle_id);
         }
 
-        if (ticketDAO.findByUseId(user_id) == user_id){
-            BookTicketResponse bookTicketResponse = new BookTicketResponse();
+        if (ticketDAO.findByUseId((long) 2) == 2){
             bookTicketResponse.setMessage("book vehicle success");
-            bookTicketResponse.setStatus(true);
+            bookTicketResponse.setStatus(HttpStatus.OK);
             return bookTicketResponse;
         }
         return null;
@@ -203,5 +226,6 @@ public class CarProductService implements ICarProductService {
         bikeSearchDTO.setShowroomName(bike.getShowroom());
         return bikeSearchDTO;
     }
+
 
 }

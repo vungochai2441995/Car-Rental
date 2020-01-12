@@ -1,5 +1,6 @@
 package net.example.service;
 
+import net.example.entity.Ticket;
 import net.example.model.dto.*;
 import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
@@ -20,4 +21,5 @@ public interface ICarProductService {
     public BikeDetailDTO searchBikeDetail(Long id);
     public List<BikeCatalogDTO>  findAllBikeCatalog();
     public List<CarCatalogDTO> findAllCarCatalog();
+    public List<TicketDTO> findAllTicket();
 }

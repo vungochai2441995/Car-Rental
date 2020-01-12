@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.http.HttpStatus;
 
 @Data
-public class BookTicketResponse {
+public class RegisterResponse {
     private String message;
     private HttpStatus status;
 }

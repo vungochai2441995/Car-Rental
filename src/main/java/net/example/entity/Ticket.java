@@ -34,17 +34,10 @@ public class Ticket {
     private User user;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "car_id", referencedColumnName = "id")
+    @JoinColumn(name = "car_id",referencedColumnName = "id")
     private Car car;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bike_id", referencedColumnName = "id")
+    @ManyToOne()
+    @JoinColumn(name = "bike_id",referencedColumnName = "id")
     private Bike bike;
-
-
-//    @OneToMany(mappedBy = "tickets")
-//    private List<Car> cars = new ArrayList<>();
-//
-//    @OneToMany(mappedBy = "tickets")
-//    private List<Bike> bikes = new ArrayList<>();
 }

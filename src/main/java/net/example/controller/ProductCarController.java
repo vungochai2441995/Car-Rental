@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -44,7 +45,7 @@ public class ProductCarController {
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
     @PostMapping("/car")
-    public ResponseEntity<?> searchCarInf(@RequestBody SearchInfRequest searchInfRequest){
+    public ResponseEntity<?> searchCarInf(@RequestBody @Valid SearchInfRequest searchInfRequest){
         List<CarSearchDTO> carSearchDTOS = carProductService.searchCarInf(searchInfRequest);
         return new ResponseEntity<List<CarSearchDTO>>(carSearchDTOS, HttpStatus.OK);
     }
@@ -55,7 +56,7 @@ public class ProductCarController {
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
     @PostMapping("/bike")
-    public ResponseEntity<?> searchBikeInf(@RequestBody SearchInfRequest searchInfRequest){
+    public ResponseEntity<?> searchBikeInf(@RequestBody @Valid SearchInfRequest searchInfRequest){
         List<BikeSearchDTO> bikeSearchDTOS = carProductService.searchBikeInf(searchInfRequest);
         return new ResponseEntity<List<BikeSearchDTO>>(bikeSearchDTOS, HttpStatus.OK);
     }
@@ -88,8 +89,8 @@ public class ProductCarController {
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
-    @GetMapping("/book")
-    public ResponseEntity<?> bookTicket(@RequestBody InsertBookingRequest insertBookingRequest){
+    @PutMapping("/book")
+    public ResponseEntity<?> bookTicket(@RequestBody @Valid InsertBookingRequest insertBookingRequest){
         BookTicketResponse result = carProductService.insertTicket(insertBookingRequest);
         return ResponseEntity.ok(result);
     }
@@ -136,5 +137,16 @@ public class ProductCarController {
     public ResponseEntity<?> findAllCarCatalog(){
         List<CarCatalogDTO> carCatalogDTOS = carProductService.findAllCarCatalog();
         return ResponseEntity.ok(carCatalogDTOS);
+    }
+
+    @ApiOperation(value="find all ticket", response = TicketDTO.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @GetMapping("/all-ticket")
+    public ResponseEntity<?> findAllTicket(){
+        List<TicketDTO> tickets = carProductService.findAllTicket();
+        return ResponseEntity.ok(tickets);
     }
 }
