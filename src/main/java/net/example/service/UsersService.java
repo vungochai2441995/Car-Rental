@@ -2,6 +2,7 @@ package net.example.service;
 
 import net.example.dao.UsersDAO;
 import net.example.entity.User;
+import net.example.model.dto.UserDTO;
 import net.example.model.mapper.UserMapper;
 import net.example.model.request.CreateUsersRequest;
 import net.example.model.request.LoginRequest;
@@ -81,17 +82,18 @@ public class UsersService implements IUsersService {
     public TokenResponse login(LoginRequest loginReqest) {
         // Lấy thông tin user
         User user = usersDAO.findByUsername(loginReqest.getUsername());
+        UserDTO userDTO = UserMapper.toUserDTO(user);
         if (user == null) {
-            return new TokenResponse("Username does not exist in the system", "", HttpStatus.NOT_FOUND);
+            return new TokenResponse("Username does not exist in the system", "", HttpStatus.NOT_FOUND,null);
         }
 
 //         Kiểm tra password
         boolean result = BCrypt.checkpw(loginReqest.getPassword(), user.getPassword());
         if (!result) {
-            return new TokenResponse("Password wrong", "", HttpStatus.BAD_REQUEST);
+            return new TokenResponse("Password wrong", "", HttpStatus.BAD_REQUEST,null);
         }
 
         String token = JwtUltis.generateToken(user);
-        return new TokenResponse("Login success", token, HttpStatus.OK);
+        return new TokenResponse("Login success", token, HttpStatus.OK,userDTO);
     }
 }
