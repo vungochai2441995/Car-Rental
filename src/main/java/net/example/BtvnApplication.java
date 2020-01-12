@@ -12,14 +12,4 @@ public class BtvnApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BtvnApplication.class, args);
 	}
-
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurerAdapter() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "PUT", "POST", "DELETE");
-//			}
-//		};
-//	}
 }

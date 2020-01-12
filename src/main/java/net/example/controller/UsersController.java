@@ -45,7 +45,7 @@ public class UsersController {
             @ApiResponse(code = 404, message="Email does not exist in the system"),
             @ApiResponse(code = 400, message="Password wrong"),
     })
-    @PutMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest req) {
         TokenResponse result = usersService.login(req);
         if (!result.getStatusCode().equals(HttpStatus.OK)) {
