@@ -1,7 +1,5 @@
 package net.example.security;
 
-import net.example.security.ApiJWTAuthorizationFilter;
-import net.example.security.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -59,18 +57,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors() // Lọc CORS -> corsFilter()
                 .and()
-                .csrf() // Trong Spring , chế độ bảo vệ khỏi CSRF mặc định được bật -> không cần thì disable đi
-                .disable()
+                .csrf().disable()
                 .authorizeRequests()
+                    .antMatchers(HttpMethod.GET, "/all-car").permitAll()
 //                .antMatchers(HttpMethod.POST).permitAll()
 //                .antMatchers(HttpMethod.GET).permitAll()
 //                .antMatchers(HttpMethod.PUT).permitAll()
-                .antMatchers(HttpMethod.POST, "/users/login").permitAll()
-                .antMatchers(HttpMethod.PUT, "/users/register").permitAll()
-                .antMatchers(HttpMethod.GET, "/book").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/all-bike").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/all-car").hasRole("ADMIN")
-                .antMatchers("/api/test-security/profile").hasRole("ADMIN")
+//                    .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+//                    .antMatchers(HttpMethod.PUT, "/users/register").permitAll()
+//                    .antMatchers(HttpMethod.GET, "/book").hasRole("USER")
+//                    .antMatchers(HttpMethod.GET, "/all-bike").hasRole("USER")
+//                    .antMatchers(HttpMethod.GET, "/all-car").hasRole("ADMIN")
+//                    .antMatchers("/api/test-security/profile").hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
