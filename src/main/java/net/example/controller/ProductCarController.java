@@ -46,7 +46,7 @@ public class ProductCarController {
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
 
-    @GetMapping("/product-location")
+        @GetMapping("/product-location")
     public ResponseEntity<?> findAllLocationProduct(){
         List<LocationDTO> locations = carProductService.searchLocationProduct();
         return ResponseEntity.ok(locations);
