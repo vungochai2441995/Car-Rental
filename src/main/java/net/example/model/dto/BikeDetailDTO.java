@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class BikeDetailDTO {
+    private Long id;
     private String name;
     private String showroomName;
     private String url;
