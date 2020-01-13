@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.*;
 
@@ -12,16 +13,15 @@ import javax.validation.constraints.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateUsersRequest {
-
-    @Email(message = "Please provide a valid email")
-    private String email;
-
+public class RegisterUsersRequest {
     @NotNull(message = "Username is required")
     @NotEmpty(message = "Username is required")
 
     private String username;
     private String address;
+
+    @Email(message = "Please provide a valid email")
+    private String email;
 
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password is required")
@@ -33,7 +33,7 @@ public class CreateUsersRequest {
     )
     private String password;
 
-    @Pattern(regexp="(09|01[2|6|8|9])+([0-9]{8})\\b", message = "Please provide a valid phone number")
+    @Size(min = 9, max = 15, message = "Please provide a valid phone number")
     @ApiModelProperty(
             example="0916016972",
             notes="Phone cannot be empty",

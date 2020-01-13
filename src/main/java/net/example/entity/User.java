@@ -32,5 +32,7 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
+    @Column(name = "url",columnDefinition = "TEXT",nullable = false)
+    private String url;
 
 }
