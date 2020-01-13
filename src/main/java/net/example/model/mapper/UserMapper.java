@@ -21,14 +21,19 @@ public class UserMapper {
     }
 
     public static User toUser(User user,UpdateUserRequest req) {
-        user.setEmail(req.getEmail());
         String hash = BCrypt.hashpw(req.getPassword(), BCrypt.gensalt(12));
         user.setPassword(hash);
         user.setPhone(req.getPhone());
-        user.setAddress(req.getAddress());
-        if ((req.getUrl() == null || req.getUrl().equals(""))&& !user.getUrl().equals("https://i.imgur.com/kjrD6Gb.png")){
-            user.setUrl("https://i.imgur.com/kjrD6Gb.png");
-        }else {
+
+        if (!req.getEmail().equals("")){
+            user.setAddress(req.getAddress());
+        }
+
+        if (!req.getAddress().equals("")){
+            user.setEmail(req.getEmail());
+        }
+
+        if (!req.getUrl().equals("")){
             user.setUrl(req.getUrl());
         }
         return user;

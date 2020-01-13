@@ -16,10 +16,12 @@ import javax.validation.constraints.*;
 public class RegisterUsersRequest {
     @NotNull(message = "Username is required")
     @NotEmpty(message = "Username is required")
-
     private String username;
+
+    @NotNull(message = "address is required")
     private String address;
 
+    @NotNull(message = "email is required")
     @Email(message = "Please provide a valid email")
     private String email;
 

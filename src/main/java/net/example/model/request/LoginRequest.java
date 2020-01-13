@@ -20,8 +20,8 @@ public class LoginRequest {
     @NotEmpty(message = "Username is required")
     @Size(min = 4, max = 20, message = "Pasword must be between 4 and 20 characters")
     @ApiModelProperty(
-            example="sam.smith@gmail.com",
-            notes="Email cannot be empty",
+            example="user",
+            notes="username cannot be empty",
             required=true
     )
     private String username;
@@ -29,7 +29,7 @@ public class LoginRequest {
     @NotNull(message = "Password is required")
     @NotEmpty(message = "Password is required")
     @ApiModelProperty(
-            example="verysecretpassword",
+            example="1234",
             notes="Password can't be empty",
             required=true
     )
