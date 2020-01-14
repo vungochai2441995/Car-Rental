@@ -183,6 +183,7 @@ public class CarProductService implements ICarProductService {
         }catch (Exception e){
             bookTicketResponse.setMessage("Can not find user");
             bookTicketResponse.setStatus(HttpStatus.NOT_FOUND);
+            bookTicketResponse.setVehicle(null);
             return bookTicketResponse;
         }
         Long userID = user.getId();
@@ -190,28 +191,44 @@ public class CarProductService implements ICarProductService {
         if (insertBookingRequest.getType() == 1) {
             Optional car = carDAO.findById(vehicle_id);
             if(!car.isPresent()){
-                bookTicketResponse.setMessage("No Car available");
+                bookTicketResponse.setMessage("No car available");
                 bookTicketResponse.setStatus(HttpStatus.NOT_FOUND);
+                bookTicketResponse.setVehicle(null);
                 return bookTicketResponse;
             }else{
-                ticketDAO.bookCar(start_date, end_date, vehicle_id,userID);
+                try {
+                    ticketDAO.bookCar(start_date, end_date, vehicle_id,userID);
+                    bookTicketResponse.setMessage("Book car success");
+                    bookTicketResponse.setStatus(HttpStatus.OK);
+                    bookTicketResponse.setVehicle(car);
+                    return bookTicketResponse;
+                }catch (Exception e) {
+                    bookTicketResponse.setMessage("Book car fail");
+                    bookTicketResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                    bookTicketResponse.setVehicle(null);
+                    return bookTicketResponse;
+                }
             }
         } else if (insertBookingRequest.getType() == 2) {
             Optional bike = bikeDAO.findById(vehicle_id);
             if(!bike.isPresent()){
-                bookTicketResponse.setMessage("No Bike available");
+                bookTicketResponse.setMessage("No bike available");
                 bookTicketResponse.setStatus(HttpStatus.NOT_FOUND);
                 return bookTicketResponse;
+            }else {
+                try {
+                    ticketDAO.bookBike(start_date, end_date, vehicle_id,userID);
+                    bookTicketResponse.setMessage("Book bike success");
+                    bookTicketResponse.setStatus(HttpStatus.OK);
+                    bookTicketResponse.setVehicle(bike);
+                    return bookTicketResponse;
+                }catch (Exception e) {
+                    bookTicketResponse.setMessage("Book bike fail");
+                    bookTicketResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+                    bookTicketResponse.setVehicle(null);
+                    return bookTicketResponse;
+                }
             }
-            ticketDAO.bookBike(start_date, end_date, vehicle_id,userID);
-        }
-
-        if (ticketDAO.findByUseId(userID) == userID){
-            bookTicketResponse.setMessage("book vehicle success");
-            bookTicketResponse.setStatus(HttpStatus.OK);
-        }else {
-            bookTicketResponse.setMessage("Internal Server Error");
-            bookTicketResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return bookTicketResponse;
     }

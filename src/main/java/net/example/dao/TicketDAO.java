@@ -12,8 +12,6 @@ import java.util.Date;
 
 @Repository
 public interface TicketDAO extends JpaRepository<Ticket,Long> {
-
-
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "INSERT INTO ticket(start_date,end_date,bike_id,user_id) VALUES (:start,:end,:vehicleID,:userID)")

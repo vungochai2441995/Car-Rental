@@ -11,7 +11,6 @@ import java.util.Date;
 @Data
 public class InsertBookingRequest {
     @NotNull(message = "type is required")
-    @NotEmpty(message = "type is required")
     @ApiModelProperty(
             example="1",
             notes="type can't be empty",
@@ -20,7 +19,6 @@ public class InsertBookingRequest {
     private int type;
 
     @NotNull(message = "vehicle_id is required")
-    @NotEmpty(message = "vehicle_id is required")
     @ApiModelProperty(
             example="1",
             notes="vehicle_id can't be empty",

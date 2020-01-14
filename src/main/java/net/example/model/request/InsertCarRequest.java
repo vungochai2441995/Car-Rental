@@ -22,7 +22,6 @@ public class InsertCarRequest {
     private String license;
 
     @NotNull(message = "Deposit is required")
-    @NotEmpty(message = "Deposit is required")
     @ApiModelProperty(
             example="10000000",
             notes="Deposit can't be empty",
@@ -42,7 +41,6 @@ public class InsertCarRequest {
     private String name;
 
     @NotNull(message = "Seat is required")
-    @NotEmpty(message = "Seat is required")
     @ApiModelProperty(
             example="4",
             notes="Seat can't be empty",
@@ -62,7 +60,6 @@ public class InsertCarRequest {
     private String cata;
 
     @NotNull(message = "Gear is required")
-    @NotEmpty(message = "Gear is required")
     @ApiModelProperty(
             example="1",
             notes="Gear can't be empty",
@@ -72,7 +69,6 @@ public class InsertCarRequest {
     private int gear;
 
     @NotNull(message = "Fuel is required")
-    @NotEmpty(message = "Fuel is required")
     @ApiModelProperty(
             example="1",
             notes="Fuel can't be empty",
@@ -82,7 +78,6 @@ public class InsertCarRequest {
     private int fuel;
 
     @NotNull(message = "Consume is required")
-    @NotEmpty(message = "Consume is required")
     @ApiModelProperty(
             example="7",
             notes="Consume can't be empty",
@@ -92,7 +87,6 @@ public class InsertCarRequest {
     private int consume;
 
     @NotNull(message = "Price is required")
-    @NotEmpty(message = "Price is required")
     @ApiModelProperty(
             example="70000",
             notes="Price can't be empty",
