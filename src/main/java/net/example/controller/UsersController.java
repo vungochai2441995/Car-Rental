@@ -48,6 +48,14 @@ public class UsersController {
     })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest req) {
+        if (req.getUsername().contains(" ")){
+            TokenResponse tokenResponse = new TokenResponse("Login fail, username must don't have white blank","",HttpStatus.BAD_REQUEST,null);
+            return ResponseEntity.ok(tokenResponse);
+        }
+        if (req.getPassword().contains(" ")){
+            TokenResponse tokenResponse = new TokenResponse("Login fail, password must don't have white blank","",HttpStatus.BAD_REQUEST,null);
+            return ResponseEntity.ok(tokenResponse);
+        }
         TokenResponse result = usersService.login(req);
         if (!result.getStatusCode().equals(HttpStatus.OK)) {
             loginStatus = false;
@@ -64,6 +72,14 @@ public class UsersController {
     })
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody @Valid RegisterUsersRequest createUserRequest) {
+        if (createUserRequest.getUsername().contains(" ")){
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, username must don't have white blank",HttpStatus.BAD_REQUEST,null);
+            return ResponseEntity.ok(commonUserResponse);
+        }
+        if (createUserRequest.getPassword().contains(" ")){
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, password must don't have white blank",HttpStatus.BAD_REQUEST,null);
+            return ResponseEntity.ok(commonUserResponse);
+        }
         CommonUserResponse result = new CommonUserResponse();
         result = usersService.createUser(createUserRequest);
         return ResponseEntity.ok(result);
@@ -76,6 +92,10 @@ public class UsersController {
     })
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
+        if (updateUserRequest.getPassword().contains(" ")){
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, password must don't have white blank",HttpStatus.BAD_REQUEST,null);
+            return ResponseEntity.ok(commonUserResponse);
+        }
         CommonUserResponse result = new CommonUserResponse();
         result = usersService.updateUser(updateUserRequest);
         return ResponseEntity.ok(result);

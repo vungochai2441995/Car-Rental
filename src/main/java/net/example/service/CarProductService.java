@@ -15,11 +15,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 @Component
 public class CarProductService implements ICarProductService {
@@ -48,14 +46,7 @@ public class CarProductService implements ICarProductService {
     TicketDAO ticketDAO;
 
     @Autowired
-    BikeCatalogDAO bikeCatalogDAO;
-
-    @Autowired
-    CarCatalogDAO carCatalogDAO;
-
-    @Autowired
     UsersDAO usersDAO;
-
 
     @Override
     public List<LocationDTO> searchLocation() {
@@ -124,27 +115,23 @@ public class CarProductService implements ICarProductService {
     }
 
     @Override
-    public List<BikeCatalogDTO> findAllBikeCatalog() {
-        List<BikeCatalogDTO> bikeCatalogDTOs = new CopyOnWriteArrayList<>();
-        ArrayList<String> results = bikeCatalogDAO.findAllBikeCatalog();
-        for (String result:results) {
-            BikeCatalogDTO bikeCatalogDTO = new BikeCatalogDTO();
-            bikeCatalogDTO.setName(result);
-            bikeCatalogDTOs.add(bikeCatalogDTO);
+    public Set<String> findAllBikeCatalog() {
+        List<Bike> bikes = bikeDAO.findAll();
+        Set<String> catalog = new CopyOnWriteArraySet<>();
+        for (Bike bike : bikes) {
+            catalog.add(bike.getCata());
         }
-        return bikeCatalogDTOs;
+        return catalog;
     }
 
     @Override
-    public List<CarCatalogDTO> findAllCarCatalog() {
-        List<CarCatalogDTO> carCatalogDTOS = new CopyOnWriteArrayList<>();
-        ArrayList<String> results = carCatalogDAO.findAllCarCatalog();
-        for (String result:results) {
-            CarCatalogDTO carCatalogDTO = new CarCatalogDTO();
-            carCatalogDTO.setName(result);
-            carCatalogDTOS.add(carCatalogDTO);
+    public Set<String> findAllCarCatalog() {
+        List<Car> cars = carDAO.findAll();
+        Set<String> catalog = new CopyOnWriteArraySet<>();
+        for (Car car: cars) {
+            catalog.add(car.getCata());
         }
-        return carCatalogDTOS;
+        return catalog;
     }
 
     @Override

@@ -46,6 +46,7 @@ public class UserMapper {
         UserDTO userDTO = new UserDTO();
         userDTO.setId(user.getId());
         userDTO.setUsername(user.getUsername());
+        userDTO.setAddress(user.getAddress());
         userDTO.setPhone(user.getPhone());
         userDTO.setEmail(user.getEmail());
         userDTO.setUrl(user.getUrl());

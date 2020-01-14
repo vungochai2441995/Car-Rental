@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public interface ICarProductService {
@@ -22,7 +23,7 @@ public interface ICarProductService {
     public List<BikeSearchDTO> searchBikeInf(SearchInfRequest searchInfRequest);
     public CarDetailDTO searchCarDetail(Long id);
     public BikeDetailDTO searchBikeDetail(Long id);
-    public List<BikeCatalogDTO>  findAllBikeCatalog();
-    public List<CarCatalogDTO> findAllCarCatalog();
+    public Set<String> findAllBikeCatalog();
+    public Set<String> findAllCarCatalog();
     public List<TicketDTO> findAllTicket();
 }

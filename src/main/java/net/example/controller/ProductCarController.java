@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @RestController
@@ -130,26 +131,26 @@ public class ProductCarController {
         return ResponseEntity.ok(bikeSearchDTOS);
     }
 
-    @ApiOperation(value="Tìm tất cả hãng xe máy", response = Long.class)
+    @ApiOperation(value="Tìm tất cả hãng xe máy", response = Set.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
     @GetMapping("/catalog-bike")
     public ResponseEntity<?> findAllBikeCatalog(){
-        List<BikeCatalogDTO>  bikeCatalogDTO = carProductService.findAllBikeCatalog();
-        return ResponseEntity.ok(bikeCatalogDTO);
+        Set<String> catalog = carProductService.findAllBikeCatalog();
+        return ResponseEntity.ok(catalog);
     }
 
-    @ApiOperation(value="Tìm tất cả hãng xe ô tô", response = Long.class)
+    @ApiOperation(value="Tìm tất cả hãng xe ô tô", response = Set.class)
     @ApiResponses({
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
     @GetMapping("/catalog-car")
     public ResponseEntity<?> findAllCarCatalog(){
-        List<CarCatalogDTO> carCatalogDTOS = carProductService.findAllCarCatalog();
-        return ResponseEntity.ok(carCatalogDTOS);
+        Set<String> catalog = carProductService.findAllCarCatalog();
+        return ResponseEntity.ok(catalog);
     }
 
     @ApiOperation(value="Tìm tất cả thông tin đặt xe", response = TicketDTO .class)
