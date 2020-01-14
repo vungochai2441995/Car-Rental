@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import net.example.entity.User;
+import net.example.model.request.ChangePasswordUserRequest;
 import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
 import net.example.model.request.UpdateUserRequest;
@@ -90,14 +91,26 @@ public class UsersController {
             @ApiResponse(code = 400, message="Bad request"),
             @ApiResponse(code = 500, message="Internal Server Error"),
     })
-    @PutMapping("/update")
+    @PutMapping("/profile")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
-        if (updateUserRequest.getPassword().contains(" ")){
-            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, password must don't have white blank",HttpStatus.BAD_REQUEST,null);
+        CommonUserResponse result = new CommonUserResponse();
+        result = usersService.updateUser(updateUserRequest);
+        return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation(value="Cập nhật mật khẩu tin người dùng", response = CommonUserResponse.class)
+    @ApiResponses({
+            @ApiResponse(code = 400, message="Bad request"),
+            @ApiResponse(code = 500, message="Internal Server Error"),
+    })
+    @PutMapping("/password")
+    public ResponseEntity<?> updateUser(@RequestBody @Valid ChangePasswordUserRequest changePasswordUserRequest) {
+        if(changePasswordUserRequest.getNewPassword().contains(" ") || changePasswordUserRequest.getOldPassword().contains(" ")){
+            CommonUserResponse commonUserResponse = new CommonUserResponse("change password fail",HttpStatus.BAD_REQUEST,null);
             return ResponseEntity.ok(commonUserResponse);
         }
         CommonUserResponse result = new CommonUserResponse();
-        result = usersService.updateUser(updateUserRequest);
+        result = usersService.changePassword(changePasswordUserRequest);
         return ResponseEntity.ok(result);
     }
 }

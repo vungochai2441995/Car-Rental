@@ -2,6 +2,7 @@ package net.example.model.mapper;
 
 import net.example.entity.User;
 import net.example.model.dto.UserDTO;
+import net.example.model.request.ChangePasswordUserRequest;
 import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.UpdateUserRequest;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -21,21 +22,25 @@ public class UserMapper {
     }
 
     public static User toUser(User user,UpdateUserRequest req) {
-        String hash = BCrypt.hashpw(req.getPassword(), BCrypt.gensalt(12));
-        user.setPassword(hash);
         user.setPhone(req.getPhone());
 
-        if (!req.getEmail().equals("")){
+        if (!req.getAddress().equals("")){
             user.setAddress(req.getAddress());
         }
 
-        if (!req.getAddress().equals("")){
+        if (!req.getEmail().equals("")){
             user.setEmail(req.getEmail());
         }
 
         if (!req.getUrl().equals("")){
             user.setUrl(req.getUrl());
         }
+        return user;
+    }
+
+    public static User toUser(User user, ChangePasswordUserRequest req) {
+        String hash = BCrypt.hashpw(req.getNewPassword(), BCrypt.gensalt(12));
+        user.setPassword(hash);
         return user;
     }
 

@@ -4,6 +4,7 @@ import net.example.dao.UsersDAO;
 import net.example.entity.User;
 import net.example.model.dto.UserDTO;
 import net.example.model.mapper.UserMapper;
+import net.example.model.request.ChangePasswordUserRequest;
 import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
 import net.example.model.request.UpdateUserRequest;
@@ -93,6 +94,28 @@ public class UsersService implements IUsersService {
             return commonUserResponse;
         }
 }
+
+    @Override
+    public CommonUserResponse changePassword(ChangePasswordUserRequest changePasswordUserRequest) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String username = (String) auth.getPrincipal();
+        User user = usersDAO.findByUsername(username);
+        boolean result = BCrypt.checkpw(changePasswordUserRequest.getOldPassword(), user.getPassword());
+        if (result){
+            user = UserMapper.toUser(user,changePasswordUserRequest);
+            try {
+                usersDAO.save(user);
+                CommonUserResponse commonUserResponse = new CommonUserResponse("update password success",HttpStatus.OK,UserMapper.toUserDTO(user));
+                return commonUserResponse;
+            }catch (Exception e) {
+                CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail",HttpStatus.INTERNAL_SERVER_ERROR,null);
+                return commonUserResponse;
+            }
+        }else {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail, wrong password",HttpStatus.BAD_REQUEST,null);
+            return commonUserResponse;
+        }
+    }
 
     @Override
     public TokenResponse login(LoginRequest loginReqest) {

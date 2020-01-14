@@ -1,6 +1,7 @@
 package net.example.service;
 
 import net.example.entity.User;
+import net.example.model.request.ChangePasswordUserRequest;
 import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
 import net.example.model.request.UpdateUserRequest;
@@ -15,6 +16,7 @@ public interface IUsersService {
     public List<User> getAllUsers();
     public CommonUserResponse createUser(RegisterUsersRequest registerUsersRequest);
     public CommonUserResponse updateUser(UpdateUserRequest updateUserRequest);
+    public CommonUserResponse changePassword(ChangePasswordUserRequest changePasswordUserRequest);
     public User findUserByUsername(String u);
     public User findUserByEmail(String e);
     public CommonUserResponse deleteUserByUsername(String u);
