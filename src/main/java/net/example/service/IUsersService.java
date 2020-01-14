@@ -4,8 +4,8 @@ import net.example.entity.User;
 import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
 import net.example.model.request.UpdateUserRequest;
-import net.example.model.response.CommonUserResponse;
-import net.example.model.response.TokenResponse;
+import net.example.model.response.user.CommonUserResponse;
+import net.example.model.response.user.TokenResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

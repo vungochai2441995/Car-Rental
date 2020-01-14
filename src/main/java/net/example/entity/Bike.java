@@ -45,11 +45,11 @@ public class Bike {
     @Column(name = "showroom",nullable = false)
     private String showroom;
 
-    @Column(name = "endDate",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "end_date",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @Column(name = "startDate")
+    @Column(name = "start_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate  ;
 

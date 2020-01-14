@@ -1,4 +1,4 @@
-package net.example.model.response;
+package net.example.model.response.user;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -7,4 +7,5 @@ import org.springframework.http.HttpStatus;
 public class BookTicketResponse {
     private String message;
     private HttpStatus status;
+
 }

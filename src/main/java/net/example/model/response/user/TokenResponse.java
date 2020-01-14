@@ -1,17 +1,15 @@
-package net.example.model.response;
+package net.example.model.response.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import net.example.model.dto.UserDTO;
 import org.springframework.http.HttpStatus;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CommonUserResponse {
+public class TokenResponse {
     private String message;
-    private HttpStatus status;
+    private String token;
+    private HttpStatus statusCode;
     private UserDTO userDTO;
-
 }

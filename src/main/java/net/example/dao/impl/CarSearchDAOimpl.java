@@ -2,8 +2,12 @@ package net.example.dao.impl;
 
 import net.example.dao.CarSearchDAOCustom;
 import net.example.entity.Car;
+import net.example.model.dto.CarSearchDTO;
+import net.example.model.mapper.ProductMapper;
 import net.example.model.request.SearchInfRequest;
+import net.example.model.response.product.CarSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.*;
@@ -16,8 +20,7 @@ public class CarSearchDAOimpl implements CarSearchDAOCustom {
     EntityManager entityManager;
 
     @Override
-    public List<Car> searchInfCar(SearchInfRequest searchInfRequest) {
-
+    public CarSearchResponse searchInfCar(SearchInfRequest searchInfRequest) {
         String sql ="SELECT * FROM car "+
                 "INNER JOIN location ON car.locationid = location.id "+
                 "WHERE car.possible = 1 "+
@@ -51,11 +54,12 @@ public class CarSearchDAOimpl implements CarSearchDAOCustom {
                 query.setParameter(i++,"%"+ searchInfRequest.getCata() +"%");
             }
             List<Car> cars = (List<Car>) query.getResultList();
-            System.out.println(cars);
-            return cars;
+            List<CarSearchDTO> carSearchDTOS = ProductMapper.toListCarDTO(cars);
+            CarSearchResponse carSearchResponse = new CarSearchResponse("search car advanced success", HttpStatus.OK,carSearchDTOS);
+            return carSearchResponse;
         }catch (Exception e){
-            e.printStackTrace();
-            return null;
+            CarSearchResponse carSearchResponse = new CarSearchResponse("search car advanced fail", HttpStatus.INTERNAL_SERVER_ERROR,null);
+            return carSearchResponse;
         }
     }
 }

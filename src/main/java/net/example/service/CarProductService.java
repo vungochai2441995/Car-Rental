@@ -6,10 +6,10 @@ import net.example.model.dto.*;
 import net.example.model.mapper.ProductMapper;
 import net.example.model.request.InsertBookingRequest;
 import net.example.model.request.SearchInfRequest;
-import net.example.model.response.BookTicketResponse;
+import net.example.model.response.product.*;
+import net.example.model.response.user.BookTicketResponse;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -58,69 +58,81 @@ public class CarProductService implements ICarProductService {
 
 
     @Override
-    public List<LocationDTO> searchLocation() {
-
-        List<Location> locations = locationDAO.findAll();
-        List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
-        for (Location location:locations) {
-            LocationDTO locationDTO = new LocationDTO();
-            BeanUtils.copyProperties(location,locationDTO);
-            locationDTOS.add(locationDTO);
+    public LocationResponse searchLocation() {
+        try {
+            List<Location> locations = locationDAO.findAll();
+            List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
+            for (Location location:locations) {
+                LocationDTO locationDTO = new LocationDTO();
+                BeanUtils.copyProperties(location,locationDTO);
+                locationDTOS.add(locationDTO);
+            }
+            LocationResponse locationResponse = new LocationResponse("Find all locations success",HttpStatus.OK,locationDTOS);
+            return locationResponse;
+        }catch (Exception e) {
+            LocationResponse locationResponse = new LocationResponse("Can not find location",HttpStatus.INTERNAL_SERVER_ERROR,null);
+            return locationResponse;
         }
-        return locationDTOS;
+
     }
 
     @Override
-    public List<LocationDTO> searchLocationProduct() {
-        List<Location> locations = locationDAO.findAllLocationInProduction();
-        List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
-        for (Location location:locations) {
-            LocationDTO locationDTO = new LocationDTO();
-            BeanUtils.copyProperties(location,locationDTO);
-            locationDTOS.add(locationDTO);
+    public LocationResponse searchLocationProduct() {
+        try {
+            List<Location> locations = locationDAO.findAllLocationInProduction();
+            List<LocationDTO> locationDTOS = new CopyOnWriteArrayList<>();
+            for (Location location:locations) {
+                LocationDTO locationDTO = new LocationDTO();
+                BeanUtils.copyProperties(location,locationDTO);
+                locationDTOS.add(locationDTO);
+            }
+            LocationResponse locationResponse = new LocationResponse("Find all locations success",HttpStatus.OK,locationDTOS);
+            return locationResponse;
+        }catch (Exception e) {
+            LocationResponse locationResponse = new LocationResponse("Can not find location",HttpStatus.INTERNAL_SERVER_ERROR,null);
+            return locationResponse;
         }
-        return locationDTOS;
     }
 
 
     @Override
-    public List<CarSearchDTO> searchCarInf(SearchInfRequest searchInfRequest) {
-        List<CarSearchDTO> carSearchDTOS = new CopyOnWriteArrayList<>();
-        List<Car> cars =  carSearchDAOCustom.searchInfCar(searchInfRequest);
-        for (Car car: cars) {
-            CarSearchDTO carSearchDTO = new CarSearchDTO();
-            carSearchDTO = mapCarEntityToModel(car);
-            carSearchDTOS.add(carSearchDTO);
+    public CarSearchResponse searchCarInf(SearchInfRequest searchInfRequest) {
+        CarSearchResponse carSearchResponse = carSearchDAOCustom.searchInfCar(searchInfRequest);
+        return carSearchResponse;
+    }
+
+    @Override
+    public BikeSearchResponse searchBikeInf(SearchInfRequest searchInfRequest) {
+        BikeSearchResponse bikeSearchResponse = bikeSearchDAOCustom.searchInfBike(searchInfRequest);
+        return bikeSearchResponse;
+    }
+
+    @Override
+    public CarDetailResponse searchCarDetail(Long id) {
+        try {
+            Car car = carDetailDAO.findOneById(id);
+            CarDetailDTO carDetailDTO = new CarDetailDTO();
+            BeanUtils.copyProperties(car,carDetailDTO);
+            CarDetailResponse carDetailResponse = new CarDetailResponse("search detail car success",HttpStatus.OK,carDetailDTO);
+            return carDetailResponse;
+        }catch (Exception e) {
+            CarDetailResponse carDetailResponse = new CarDetailResponse("search detail car fail",HttpStatus.INTERNAL_SERVER_ERROR,null);
+            return carDetailResponse;
         }
-        return carSearchDTOS;
     }
 
     @Override
-    public List<BikeSearchDTO> searchBikeInf(SearchInfRequest searchInfRequest) {
-        List<BikeSearchDTO> bikeSearchDTOS = new CopyOnWriteArrayList<>();
-        List<Bike> bikes =  bikeSearchDAOCustom.searchInfBike(searchInfRequest);
-        for (Bike bike: bikes) {
-            BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
-            bikeSearchDTO = mapBikeEntityToModel(bike);
-            bikeSearchDTOS.add(bikeSearchDTO);
+    public BikeDetailResponse searchBikeDetail(Long id) {
+        try {
+            Bike bike = bikeDetailDAO.findOneById(id);
+            BikeDetailDTO bikeDetailDTO = new BikeDetailDTO();
+            BeanUtils.copyProperties(bike,bikeDetailDTO);
+            BikeDetailResponse bikeDetailResponse = new BikeDetailResponse("search detail bike success",HttpStatus.OK,bikeDetailDTO);
+            return bikeDetailResponse;
+        }catch (Exception e) {
+            BikeDetailResponse bikeDetailResponse = new BikeDetailResponse("search detail bike success",HttpStatus.OK,null);
+            return bikeDetailResponse;
         }
-        return bikeSearchDTOS;
-    }
-
-    @Override
-    public CarDetailDTO searchCarDetail(Long id) {
-        Car car = carDetailDAO.findOneById(id);
-        CarDetailDTO carDetailDTO = new CarDetailDTO();
-        BeanUtils.copyProperties(car,carDetailDTO);
-        return carDetailDTO;
-    }
-
-    @Override
-    public BikeDetailDTO searchBikeDetail(Long id) {
-        Bike bike = bikeDetailDAO.findOneById(id);
-        BikeDetailDTO bikeDetailDTO = new BikeDetailDTO();
-        BeanUtils.copyProperties(bike,bikeDetailDTO);
-        return bikeDetailDTO;
     }
 
     @Override
@@ -161,24 +173,14 @@ public class CarProductService implements ICarProductService {
     @Override
     public List<CarSearchDTO> findAllCar() {
         List<Car> cars = carDAO.findAll();
-        List<CarSearchDTO> carSearchDTOS = new CopyOnWriteArrayList<>();
-        for (Car car: cars) {
-            CarSearchDTO carSearchDTO = new CarSearchDTO();
-            carSearchDTO = mapCarEntityToModel(car);
-            carSearchDTOS.add(carSearchDTO);
-        }
+        List<CarSearchDTO> carSearchDTOS = ProductMapper.toListCarDTO(cars);
         return carSearchDTOS;
     }
 
     @Override
     public List<BikeSearchDTO> findAllBike() {
         List<Bike> bikes = bikeDAO.findAll();
-        List<BikeSearchDTO> bikeSearchDTOS = new CopyOnWriteArrayList<>();
-        for (Bike bike: bikes) {
-            BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
-            bikeSearchDTO = mapBikeEntityToModel(bike);
-            bikeSearchDTOS.add(bikeSearchDTO);
-        }
+        List<BikeSearchDTO> bikeSearchDTOS = ProductMapper.toListBikeDTO(bikes);
         return bikeSearchDTOS;
     }
 
@@ -199,7 +201,8 @@ public class CarProductService implements ICarProductService {
             return bookTicketResponse;
         }
         Long userID = user.getId();
-
+        List<Ticket> tickets = ticketDAO.findAllByUser_id(userID);
+        System.out.println(tickets);
         if (insertBookingRequest.getType() == 1) {
             Optional car = carDAO.findById(vehicle_id);
             if(!car.isPresent()){
@@ -228,30 +231,5 @@ public class CarProductService implements ICarProductService {
         }
         return bookTicketResponse;
     }
-
-    private  CarSearchDTO mapCarEntityToModel(Car car){
-        CarSearchDTO carSearchDTO = new CarSearchDTO();
-        carSearchDTO.setGear(car.getGear());
-        carSearchDTO.setImage(car.getUrl());
-        carSearchDTO.setName(car.getName());
-        carSearchDTO.setPrice(car.getPrice());
-        carSearchDTO.setLocation(car.getLocation().getId());
-        carSearchDTO.setId(car.getId());
-        carSearchDTO.setShowroomName(car.getShowroomName());
-        return carSearchDTO;
-    }
-
-    private  BikeSearchDTO mapBikeEntityToModel(Bike bike){
-        BikeSearchDTO bikeSearchDTO = new BikeSearchDTO();
-        bikeSearchDTO.setGear(bike.getGear());
-        bikeSearchDTO.setImage(bike.getUrl());
-        bikeSearchDTO.setName(bike.getName());
-        bikeSearchDTO.setPrice(bike.getPrice());
-        bikeSearchDTO.setLocation(bike.getLocation().getId());
-        bikeSearchDTO.setId(bike.getId());
-        bikeSearchDTO.setShowroomName(bike.getShowroom());
-        return bikeSearchDTO;
-    }
-
 
 }

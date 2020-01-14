@@ -3,8 +3,14 @@ package net.example.dao.impl;
 import net.example.dao.BikeSearchDAOCustom;
 import net.example.entity.Bike;
 import net.example.entity.Car;
+import net.example.model.dto.BikeSearchDTO;
+import net.example.model.dto.CarSearchDTO;
+import net.example.model.mapper.ProductMapper;
 import net.example.model.request.SearchInfRequest;
+import net.example.model.response.product.BikeSearchResponse;
+import net.example.model.response.product.CarSearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -17,7 +23,7 @@ public class BikeSearchDAOimpl implements BikeSearchDAOCustom {
     EntityManager entityManager;
 
     @Override
-    public List<Bike> searchInfBike(SearchInfRequest searchInfRequest) {
+    public BikeSearchResponse searchInfBike(SearchInfRequest searchInfRequest) {
 
         String sql ="SELECT * FROM bike "+
                 "INNER JOIN location ON bike.locationid = location.id "+
@@ -46,10 +52,12 @@ public class BikeSearchDAOimpl implements BikeSearchDAOCustom {
                 query.setParameter(i++,"%"+ searchInfRequest.getCata() +"%");
             }
             List<Bike> bikes = (List<Bike>) query.getResultList();
-            return bikes;
+            List<BikeSearchDTO> bikeSearchDTOS = ProductMapper.toListBikeDTO(bikes);
+            BikeSearchResponse bikeSearchResponse = new BikeSearchResponse("search bike advanced success", HttpStatus.OK,bikeSearchDTOS);
+            return bikeSearchResponse;
         }catch (Exception e){
-            e.printStackTrace();
-            return null;
+            BikeSearchResponse bikeSearchResponse = new BikeSearchResponse("search bike advanced fail", HttpStatus.INTERNAL_SERVER_ERROR,null);
+            return bikeSearchResponse;
         }
     }
 

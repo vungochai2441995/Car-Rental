@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Repository
 public interface TicketDAO extends JpaRepository<Ticket,Long> {
-
-
+    List<Ticket> findAllByUser_id(Long userID);
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "INSERT INTO ticket(start_date,end_date,bike_id,user_id) VALUES (:start,:end,:vehicleID,:userID)")
@@ -27,5 +27,4 @@ public interface TicketDAO extends JpaRepository<Ticket,Long> {
 
     @Query(nativeQuery = true, value = "SELECT ticket.user_id FROM ticket WHERE user_id = :userID")
     int findByUseId(@Param("userID") Long user_id);
-
 }
