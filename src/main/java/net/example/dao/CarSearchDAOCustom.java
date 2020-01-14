@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CarSearchDAOCustom{
+public interface CarSearchDAOCustom {
     public List<Car> searchInfCar(SearchInfRequest searchInfRequest);
 }

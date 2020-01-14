@@ -3,8 +3,6 @@ package net.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
@@ -14,16 +12,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="username",unique = true)
+    @Column(name = "username", unique = true)
     private String username;
 
-    @Column(name="email",nullable = false)
+    @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="pass_word",nullable = false)
+    @Column(name = "pass_word", nullable = false)
     private String password;
 
     @Column(name = "role", nullable = false)
@@ -32,7 +30,7 @@ public class User {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "url",columnDefinition = "TEXT",nullable = false)
+    @Column(name = "url", columnDefinition = "TEXT", nullable = false)
     private String url;
 
 }

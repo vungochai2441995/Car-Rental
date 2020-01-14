@@ -1,6 +1,5 @@
 package net.example.model.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

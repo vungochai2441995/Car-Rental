@@ -1,7 +1,5 @@
 package net.example.security;
 
-import net.example.security.ApiJWTAuthorizationFilter;
-import net.example.security.RestAuthenticationEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -63,9 +61,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET).permitAll()
-                .antMatchers(HttpMethod.POST,"/users/register").permitAll()
-                .antMatchers(HttpMethod.POST,"/bike").permitAll()
-                .antMatchers(HttpMethod.POST,"/car").permitAll()
+                .antMatchers(HttpMethod.POST, "/users/register").permitAll()
+                .antMatchers(HttpMethod.POST, "/bike").permitAll()
+                .antMatchers(HttpMethod.POST, "/car").permitAll()
                 .antMatchers(HttpMethod.POST, "/book").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/users/profile").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/users/password").hasRole("USER")

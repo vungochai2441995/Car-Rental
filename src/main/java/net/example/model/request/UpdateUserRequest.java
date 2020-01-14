@@ -4,7 +4,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -19,13 +18,13 @@ public class UpdateUserRequest {
     @NotNull(message = "phone is required")
     @Size(min = 9, max = 15, message = "Please provide a valid phone number")
     @ApiModelProperty(
-            example="0916016972"
+            example = "0916016972"
     )
     private String phone;
 
     @NotNull(message = "Url is required")
     @ApiModelProperty(
-            example="https://i.imgur.com/kjrD6Gb.png"
+            example = "https://i.imgur.com/kjrD6Gb.png"
     )
     private String url;
 }

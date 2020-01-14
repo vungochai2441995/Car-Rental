@@ -1,5 +1,6 @@
 package net.example.security;
 
+import io.jsonwebtoken.Claims;
 import net.example.util.JwtUltis;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,7 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import io.jsonwebtoken.Claims;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -46,7 +47,7 @@ public class ApiJWTAuthorizationFilter extends BasicAuthenticationFilter {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
         if (roles != null) {
             for (String role : roles) {
-                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_"+role);
+                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role);
                 authorities.add(authority);
             }
         }

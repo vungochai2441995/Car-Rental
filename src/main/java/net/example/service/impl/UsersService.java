@@ -1,15 +1,16 @@
-package net.example.service;
+package net.example.service.impl;
 
 import net.example.dao.UsersDAO;
 import net.example.entity.User;
 import net.example.model.dto.UserDTO;
 import net.example.model.mapper.UserMapper;
 import net.example.model.request.ChangePasswordUserRequest;
-import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
+import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.UpdateUserRequest;
 import net.example.model.response.CommonUserResponse;
 import net.example.model.response.TokenResponse;
+import net.example.service.IUsersService;
 import net.example.util.JwtUltis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,14 +68,14 @@ public class UsersService implements IUsersService {
         if (users != null) {
             try {
                 usersDAO.deleteById(users.getId());
-                CommonUserResponse commonUserResponse = new CommonUserResponse("Delete user success",HttpStatus.OK,null);
+                CommonUserResponse commonUserResponse = new CommonUserResponse("Delete user success", HttpStatus.OK, null);
                 return commonUserResponse;
             } catch (Exception e) {
-                CommonUserResponse commonUserResponse = new CommonUserResponse("Delete user fail",HttpStatus.INTERNAL_SERVER_ERROR,null);
+                CommonUserResponse commonUserResponse = new CommonUserResponse("Delete user fail", HttpStatus.INTERNAL_SERVER_ERROR, null);
                 return commonUserResponse;
             }
         } else {
-            CommonUserResponse commonUserResponse = new CommonUserResponse("User is not exist",HttpStatus.BAD_REQUEST,null);
+            CommonUserResponse commonUserResponse = new CommonUserResponse("User is not exist", HttpStatus.BAD_REQUEST, null);
             return commonUserResponse;
         }
     }
@@ -83,17 +84,17 @@ public class UsersService implements IUsersService {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = (String) auth.getPrincipal();
         User user = usersDAO.findByUsername(username);
-        user = UserMapper.toUser(user,updateUserRequest);
+        user = UserMapper.toUser(user, updateUserRequest);
         try {
             usersDAO.save(user);
             UserDTO userDTO = UserMapper.toUserDTO(user);
-            CommonUserResponse commonUserResponse = new CommonUserResponse("Update user success",HttpStatus.OK,userDTO);
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Update user success", HttpStatus.OK, userDTO);
             return commonUserResponse;
-        }catch (Exception e) {
-            CommonUserResponse commonUserResponse = new CommonUserResponse("Update user fail",HttpStatus.INTERNAL_SERVER_ERROR,null);
+        } catch (Exception e) {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Update user fail", HttpStatus.INTERNAL_SERVER_ERROR, null);
             return commonUserResponse;
         }
-}
+    }
 
     @Override
     public CommonUserResponse changePassword(ChangePasswordUserRequest changePasswordUserRequest) {
@@ -101,18 +102,18 @@ public class UsersService implements IUsersService {
         String username = (String) auth.getPrincipal();
         User user = usersDAO.findByUsername(username);
         boolean result = BCrypt.checkpw(changePasswordUserRequest.getOldPassword(), user.getPassword());
-        if (result){
-            user = UserMapper.toUser(user,changePasswordUserRequest);
+        if (result) {
+            user = UserMapper.toUser(user, changePasswordUserRequest);
             try {
                 usersDAO.save(user);
-                CommonUserResponse commonUserResponse = new CommonUserResponse("update password success",HttpStatus.OK,UserMapper.toUserDTO(user));
+                CommonUserResponse commonUserResponse = new CommonUserResponse("update password success", HttpStatus.OK, UserMapper.toUserDTO(user));
                 return commonUserResponse;
-            }catch (Exception e) {
-                CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail",HttpStatus.INTERNAL_SERVER_ERROR,null);
+            } catch (Exception e) {
+                CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail", HttpStatus.INTERNAL_SERVER_ERROR, null);
                 return commonUserResponse;
             }
-        }else {
-            CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail, wrong password",HttpStatus.BAD_REQUEST,null);
+        } else {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("update password fail, wrong password", HttpStatus.BAD_REQUEST, null);
             return commonUserResponse;
         }
     }
@@ -134,5 +135,5 @@ public class UsersService implements IUsersService {
 
         String token = JwtUltis.generateToken(user);
         return new TokenResponse("Login success", token, HttpStatus.OK, userDTO);
-        }
     }
+}

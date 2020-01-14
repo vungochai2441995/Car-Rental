@@ -6,8 +6,8 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import net.example.entity.User;
 import net.example.model.request.ChangePasswordUserRequest;
-import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.LoginRequest;
+import net.example.model.request.RegisterUsersRequest;
 import net.example.model.request.UpdateUserRequest;
 import net.example.model.response.CommonUserResponse;
 import net.example.model.response.TokenResponse;
@@ -31,30 +31,30 @@ public class UsersController {
 
     private boolean loginStatus = false;
 
-    @ApiOperation(value="Tìm tất cả thông tin người dùng", response = User.class)
+    @ApiOperation(value = "Tìm tất cả thông tin người dùng", response = User.class)
     @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
     })
     @GetMapping("/list")
-    public ResponseEntity<?> getAllUsers(){
+    public ResponseEntity<?> getAllUsers() {
         List<User> usersList = usersService.getAllUsers();
         return ResponseEntity.ok(usersList);
     }
 
-    @ApiOperation(value="Đăng nhập", response = TokenResponse.class)
+    @ApiOperation(value = "Đăng nhập", response = TokenResponse.class)
     @ApiResponses({
-            @ApiResponse(code = 404, message="Email does not exist in the system"),
-            @ApiResponse(code = 400, message="Password wrong"),
+            @ApiResponse(code = 404, message = "Email does not exist in the system"),
+            @ApiResponse(code = 400, message = "Password wrong"),
     })
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequest req) {
-        if (req.getUsername().contains(" ")){
-            TokenResponse tokenResponse = new TokenResponse("Login fail, username must don't have white blank","",HttpStatus.BAD_REQUEST,null);
+        if (req.getUsername().contains(" ")) {
+            TokenResponse tokenResponse = new TokenResponse("Login fail, username must don't have white blank", "", HttpStatus.BAD_REQUEST, null);
             return ResponseEntity.ok(tokenResponse);
         }
-        if (req.getPassword().contains(" ")){
-            TokenResponse tokenResponse = new TokenResponse("Login fail, password must don't have white blank","",HttpStatus.BAD_REQUEST,null);
+        if (req.getPassword().contains(" ")) {
+            TokenResponse tokenResponse = new TokenResponse("Login fail, password must don't have white blank", "", HttpStatus.BAD_REQUEST, null);
             return ResponseEntity.ok(tokenResponse);
         }
         TokenResponse result = usersService.login(req);
@@ -66,19 +66,19 @@ public class UsersController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation(value="Đăng ký", response = CommonUserResponse.class)
+    @ApiOperation(value = "Đăng ký", response = CommonUserResponse.class)
     @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
     })
     @PostMapping("/register")
     public ResponseEntity<?> createUser(@RequestBody @Valid RegisterUsersRequest createUserRequest) {
-        if (createUserRequest.getUsername().contains(" ")){
-            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, username must don't have white blank",HttpStatus.BAD_REQUEST,null);
+        if (createUserRequest.getUsername().contains(" ")) {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, username must don't have white blank", HttpStatus.BAD_REQUEST, null);
             return ResponseEntity.ok(commonUserResponse);
         }
-        if (createUserRequest.getPassword().contains(" ")){
-            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, password must don't have white blank",HttpStatus.BAD_REQUEST,null);
+        if (createUserRequest.getPassword().contains(" ")) {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("Login fail, password must don't have white blank", HttpStatus.BAD_REQUEST, null);
             return ResponseEntity.ok(commonUserResponse);
         }
         CommonUserResponse result = new CommonUserResponse();
@@ -86,10 +86,10 @@ public class UsersController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation(value="Cập nhật thông tin người dùng", response = CommonUserResponse.class)
+    @ApiOperation(value = "Cập nhật thông tin người dùng", response = CommonUserResponse.class)
     @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
     })
     @PutMapping("/profile")
     public ResponseEntity<?> updateUser(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
@@ -98,15 +98,15 @@ public class UsersController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation(value="Cập nhật mật khẩu tin người dùng", response = CommonUserResponse.class)
+    @ApiOperation(value = "Cập nhật mật khẩu tin người dùng", response = CommonUserResponse.class)
     @ApiResponses({
-            @ApiResponse(code = 400, message="Bad request"),
-            @ApiResponse(code = 500, message="Internal Server Error"),
+            @ApiResponse(code = 400, message = "Bad request"),
+            @ApiResponse(code = 500, message = "Internal Server Error"),
     })
     @PutMapping("/password")
     public ResponseEntity<?> updateUser(@RequestBody @Valid ChangePasswordUserRequest changePasswordUserRequest) {
-        if(changePasswordUserRequest.getNewPassword().contains(" ") || changePasswordUserRequest.getOldPassword().contains(" ")){
-            CommonUserResponse commonUserResponse = new CommonUserResponse("change password fail",HttpStatus.BAD_REQUEST,null);
+        if (changePasswordUserRequest.getNewPassword().contains(" ") || changePasswordUserRequest.getOldPassword().contains(" ")) {
+            CommonUserResponse commonUserResponse = new CommonUserResponse("change password fail", HttpStatus.BAD_REQUEST, null);
             return ResponseEntity.ok(commonUserResponse);
         }
         CommonUserResponse result = new CommonUserResponse();

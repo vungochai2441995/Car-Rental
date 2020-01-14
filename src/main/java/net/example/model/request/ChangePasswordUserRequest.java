@@ -13,9 +13,9 @@ public class ChangePasswordUserRequest {
     @NotEmpty(message = "Old password is required")
     @NotBlank
     @ApiModelProperty(
-            example="oldPassword",
-            notes="old password can't be empty",
-            required=true
+            example = "oldPassword",
+            notes = "old password can't be empty",
+            required = true
     )
     private String oldPassword;
 
@@ -23,9 +23,9 @@ public class ChangePasswordUserRequest {
     @NotEmpty(message = "New password is required")
     @NotBlank
     @ApiModelProperty(
-            example="newPassword",
-            notes="new password can't be empty",
-            required=true
+            example = "newPassword",
+            notes = "new password can't be empty",
+            required = true
     )
     private String newPassword;
 }

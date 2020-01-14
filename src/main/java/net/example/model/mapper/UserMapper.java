@@ -21,18 +21,18 @@ public class UserMapper {
         return user;
     }
 
-    public static User toUser(User user,UpdateUserRequest req) {
+    public static User toUser(User user, UpdateUserRequest req) {
         user.setPhone(req.getPhone());
 
-        if (!req.getAddress().equals("")){
+        if (!req.getAddress().equals("")) {
             user.setAddress(req.getAddress());
         }
 
-        if (!req.getEmail().equals("")){
+        if (!req.getEmail().equals("")) {
             user.setEmail(req.getEmail());
         }
 
-        if (!req.getUrl().equals("")){
+        if (!req.getUrl().equals("")) {
             user.setUrl(req.getUrl());
         }
         return user;

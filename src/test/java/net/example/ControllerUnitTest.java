@@ -2,7 +2,7 @@ package net.example;
 
 
 import net.example.entity.User;
-import net.example.service.UsersService;
+import net.example.service.impl.UsersService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

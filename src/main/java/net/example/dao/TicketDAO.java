@@ -11,16 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 
 @Repository
-public interface TicketDAO extends JpaRepository<Ticket,Long> {
+public interface TicketDAO extends JpaRepository<Ticket, Long> {
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "INSERT INTO ticket(start_date,end_date,bike_id,user_id) VALUES (:start,:end,:vehicleID,:userID)")
-    void bookBike(@Param("start")Date startDate,@Param("end")Date endDate,@Param("vehicleID") Long vehicleID,@Param("userID") Long userID);
+    void bookBike(@Param("start") Date startDate, @Param("end") Date endDate, @Param("vehicleID") Long vehicleID, @Param("userID") Long userID);
 
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value = "INSERT INTO ticket(start_date,end_date,car_id,user_id) VALUES (:start,:end,:vehicleID,:userID)")
-    void bookCar(@Param("start")Date startDate,@Param("end")Date endDate,@Param("vehicleID") Long vehicleID,@Param("userID") Long userID);
+    void bookCar(@Param("start") Date startDate, @Param("end") Date endDate, @Param("vehicleID") Long vehicleID, @Param("userID") Long userID);
 
 
     @Query(nativeQuery = true, value = "SELECT ticket.user_id FROM ticket WHERE user_id = :userID")

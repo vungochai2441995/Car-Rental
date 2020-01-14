@@ -3,9 +3,7 @@ package net.example.entity;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Table(name = "ticket")
@@ -16,7 +14,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "createdDate",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "createdDate", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
@@ -34,10 +32,10 @@ public class Ticket {
     private User user;
 
     @ManyToOne()
-    @JoinColumn(name = "car_id",referencedColumnName = "id")
+    @JoinColumn(name = "car_id", referencedColumnName = "id")
     private Car car;
 
     @ManyToOne()
-    @JoinColumn(name = "bike_id",referencedColumnName = "id")
+    @JoinColumn(name = "bike_id", referencedColumnName = "id")
     private Bike bike;
 }

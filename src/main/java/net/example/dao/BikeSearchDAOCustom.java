@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface BikeSearchDAOCustom {
     public List<Bike> searchInfBike(SearchInfRequest searchInfRequest);
+
     public Bike searchDetailBike(Integer id);
 }
