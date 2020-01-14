@@ -21,12 +21,12 @@ Website chỉ đóng vai là bên cho thuê xe. Người thuê xe sẽ được 
 
 ## Thành viên
 Thành viên của project bao gồm:
-- Nguyễn Thị Thùy: Phụ trách FrontEnd, //Cần bổ sung
+- Nguyễn Thị Thùy: Phụ trách FrontEnd, thiết kế giao diện, xử lí logic chức năng, kết nối với api của backend
 - Vũ Ngọc Hải: Phụ trách BackEnd, bao gồm thiết kế database, thiết kế các REST API để liên kết database với bên FrontEnd.
 
 ## Mentor
 Mentor hướng dẫn
-- //FrontEnd bổ sung
+- Đỗ Văn Trọng: FrontEnd
 - Phạm Thanh Hải: BackEnd
 
 ## Tính Năng
@@ -52,7 +52,7 @@ Cấu trúc và các công cụ được sử dụng của project:
 ## Kiến trúc
 - main: chạy ứng dụng
 - application.properties: Kết nối database, thông tin server mysql, port(8080)
-- controller: Xác định API tưng ứng cho mỗi chức năng chính của website
+- controller: chứa endpoint API tưng ứng cho mỗi chức năng chính của website
 - entity: Tạo các thực thể đại diện cho mỗi bảng trong database.
 - model: Gồm 4 phần:
         dto : object mà lớp dao trả về cho lớp controller
