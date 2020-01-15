@@ -32,7 +32,7 @@ Mentor hướng dẫn
 ## Tính Năng
 User story của người dùng.
 
-<img align="left|middle" src="https://i.imgur.com/isbtagv.png">
+<img align="left|middle" src="https://i.imgur.com/kXw3Lwo.png">
 
 ## Cấu trúc Database
 Cấu trúc các bảng trong database của project
