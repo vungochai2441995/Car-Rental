@@ -43,7 +43,7 @@ Cấu trúc các bảng trong database của project
 Cấu trúc và các công cụ được sử dụng của project:
 - Version control: git
 - Database: mysql
-- BackEnd: Java
+- BackEnd: Java - Spring Boot
 - IDE : intellij
 - Testing: Postman: https://www.getpostman.com/
 - FrontEnd:
