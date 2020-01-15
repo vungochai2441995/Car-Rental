@@ -6,7 +6,7 @@ import lombok.Data;
 public class BikeDetailDTO {
     private Long id;
     private String name;
-    private String showroomName;
+    private String showroom;
     private String url;
     private int deposit;
     private int cc;

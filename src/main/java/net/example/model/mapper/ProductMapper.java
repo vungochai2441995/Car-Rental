@@ -2,6 +2,7 @@ package net.example.model.mapper;
 
 import net.example.entity.Ticket;
 import net.example.entity.User;
+import net.example.model.dto.BikeDetailDTO;
 import net.example.model.dto.TicketDTO;
 import net.example.model.dto.UserDTO;
 
