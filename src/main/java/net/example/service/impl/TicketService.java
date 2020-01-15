@@ -4,6 +4,7 @@ import net.example.dao.BikeDAO;
 import net.example.dao.CarDAO;
 import net.example.dao.TicketDAO;
 import net.example.dao.UsersDAO;
+import net.example.entity.Car;
 import net.example.entity.Ticket;
 import net.example.entity.User;
 import net.example.model.dto.TicketDTO;
@@ -79,6 +80,7 @@ public class TicketService implements ITicketService {
                     bookTicketResponse.setMessage("Book car success");
                     bookTicketResponse.setStatus(HttpStatus.OK);
                     bookTicketResponse.setVehicle(car);
+                    bookTicketResponse.setStartDate(insertBookingRequest.getStartDate());
                     return bookTicketResponse;
                 } catch (Exception e) {
                     bookTicketResponse.setMessage("Book car fail");
